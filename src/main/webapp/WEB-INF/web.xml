@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+  <servlet>
+    <servlet-name>counterServlet</servlet-name>
+    <servlet-class>com.headissue.badges.QueryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>counterServlet</servlet-name>
+    <url-pattern>/q/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>textServlet</servlet-name>
+    <servlet-class>com.headissue.badges.TextBadgeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>textServlet</servlet-name>
+    <url-pattern>/txt/*</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>static-resource</servlet-name>
+    <servlet-class>com.headissue.badges.CompressFilter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>static-resource</servlet-name>
+    <url-pattern>/xz/*</url-pattern>
+  </servlet-mapping>
+
+  <error-page>
+    <location>/error.jsp</location>
+  </error-page>
+
+</web-app>
