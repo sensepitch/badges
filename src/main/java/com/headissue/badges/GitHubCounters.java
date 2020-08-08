@@ -1,6 +1,8 @@
 package com.headissue.badges;
 
 /**
+ * Java object representation of GitHub counters
+ *
  * @author Jens Wilke
  */
 public class GitHubCounters {
@@ -13,24 +15,24 @@ public class GitHubCounters {
     return starGazers;
   }
 
-  public void setStarGazers(final int _starGazers) {
-    starGazers = _starGazers;
+  public void setStarGazers(final int v) {
+    starGazers = v;
   }
 
   public int getForks() {
     return forks;
   }
 
-  public void setForks(final int _forks) {
-    forks = _forks;
+  public void setForks(final int v) {
+    forks = v;
   }
 
   public int getSubscribers() {
     return subscribers;
   }
 
-  public void setSubscribers(final int _subscribers) {
-    subscribers = _subscribers;
+  public void setSubscribers(final int v) {
+    subscribers = v;
   }
 
 }

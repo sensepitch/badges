@@ -11,7 +11,7 @@ public class MavenCentralContent {
     return latestVersion;
   }
 
-  public void setLatestVersion(final String _latestVersion) {
-    latestVersion = _latestVersion;
+  public void setLatestVersion(final String v) {
+    latestVersion = v;
   }
 }

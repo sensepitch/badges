@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The main servlet. Additional badges can be added by adding an additional data source and a jsp template.
+ * The main servlet. Additional badges can be added by adding an additional data
+ * source and a jsp template.
  *
  * @author Jens Wilke
  */
@@ -35,10 +36,10 @@ public class QueryServlet extends HttpServlet {
   }
 
   @SuppressWarnings("unchecked")
-  void addSrouce(String _name, CacheLoader<String, ?> l) {
-    counterSources.put(_name,
+  void addSrouce(String name, CacheLoader<String, ?> l) {
+    counterSources.put(name,
       Cache2kBuilder.of(String.class, Object.class)
-        .name(_name)
+        .name(name)
         .loader((CacheLoader<String, Object>) l)
         .refreshAhead(true)
         .expireAfterWrite(REFRESH_MINUTES, TimeUnit.MINUTES)
@@ -55,20 +56,20 @@ public class QueryServlet extends HttpServlet {
     if (pi == null) {
       throw new InvalidException();
     }
-    String[] _params = pi.split("/");
-    if (_params.length < 4) {
+    String[] params = pi.split("/");
+    if (params.length < 4) {
       throw new InvalidException();
     }
-    String _sourceName = _params[1];
-    String _metricName = _params[2];
-    String _templateName = _params[3];
+    String sourceName = params[1];
+    String metricName = params[2];
+    String templateName = params[3];
     int idx = pi.substring(0, pi.lastIndexOf('/')).lastIndexOf('/');
-    String _project = pi.substring(idx + 1);
-    Object _result = counterSources.get(_sourceName).get(_project);
-    Object _data;
+    String project = pi.substring(idx + 1);
+    Object result = counterSources.get(sourceName).get(project);
+    Object data;
     try {
-      Method m = _result.getClass().getMethod("get" + Character.toUpperCase(_metricName.charAt(0)) + _metricName.substring(1));
-      _data = m.invoke(_result);
+      Method m = result.getClass().getMethod("get" + Character.toUpperCase(metricName.charAt(0)) + metricName.substring(1));
+      data = m.invoke(result);
     } catch (NoSuchMethodException x) {
      throw new InvalidException();
     } catch (IllegalAccessException x) {
@@ -76,7 +77,7 @@ public class QueryServlet extends HttpServlet {
     } catch (InvocationTargetException x) {
       throw new InvalidException();
     }
-    RequestDispatcher dp = req.getRequestDispatcher("/" + _templateName + ".jsp?project=" + _project + "&data=" + URLEncoder.encode(_data.toString(), "UTF-8"));
+    RequestDispatcher dp = req.getRequestDispatcher("/" + templateName + ".jsp?project=" + project + "&data=" + URLEncoder.encode(data.toString(), "UTF-8"));
     dp.forward(req, resp);
   }
 

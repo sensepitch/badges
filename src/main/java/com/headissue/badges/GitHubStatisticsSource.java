@@ -20,11 +20,11 @@ public class GitHubStatisticsSource extends CacheLoader<String, GitHubCounters> 
     String theString = IOUtils.toString(in, "UTF-8");
     in.close();
     JSONObject obj = new JSONObject(theString);
-    GitHubCounters _counters = new GitHubCounters();
-    _counters.setForks(obj.getInt("forks_count"));
-    _counters.setStarGazers(obj.getInt("stargazers_count"));
-    _counters.setSubscribers(obj.getInt("subscribers_count"));
-    return _counters;
+    GitHubCounters counters = new GitHubCounters();
+    counters.setForks(obj.getInt("forks_count"));
+    counters.setStarGazers(obj.getInt("stargazers_count"));
+    counters.setSubscribers(obj.getInt("subscribers_count"));
+    return counters;
   }
 
 }

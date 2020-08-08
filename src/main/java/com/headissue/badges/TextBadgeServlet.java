@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 /**
+ * Render arbitrary colored text in badges style
+ *
  * @author Jens Wilke
  */
 public class TextBadgeServlet extends HttpServlet {
 
   /**
-   * {@code called with, e.g.: /img/github/starGazers/gh-stargazers/cache2k/cache2k}
+   * {@code called with, e.g.: txt/hello/world}
    */
   @Override
   protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
@@ -22,29 +24,29 @@ public class TextBadgeServlet extends HttpServlet {
     if (pi == null) {
       throw new InvalidException();
     }
-    String[] _params = pi.split("/");
-    if (_params.length < 2) {
+    String[] params = pi.split("/");
+    if (params.length < 2) {
       throw new InvalidException();
     }
-    String _left = _params[1];
-    String _right = _params[2];
-    String _leftColor = "555";
-    String _rightColor = "4c2";
-    int idx = _left.lastIndexOf(",");
+    String left = params[1];
+    String right = params[2];
+    String leftColor = "555";
+    String rightColor = "4c2";
+    int idx = left.lastIndexOf(",");
     if (idx >= 0) {
-      _leftColor = _left.substring(idx + 1);
-      _left = _left.substring(0, idx);
+      leftColor = left.substring(idx + 1);
+      left = left.substring(0, idx);
     }
-    idx = _right.lastIndexOf(",");
+    idx = right.lastIndexOf(",");
     if (idx >= 0) {
-      _rightColor = _right.substring(idx + 1);
-      _right = _right.substring(0, idx);
+      rightColor = right.substring(idx + 1);
+      right = right.substring(0, idx);
     }
     RequestDispatcher dp = req.getRequestDispatcher("/left-right.jsp?"
-      + "left=" + URLEncoder.encode(_left, "UTF-8")
-      + "&right=" + URLEncoder.encode(_right, "UTF-8")
-      + "&leftColor=" + URLEncoder.encode(_leftColor, "UTF-8")
-      + "&rightColor=" + URLEncoder.encode(_rightColor, "UTF-8"));
+      + "left=" + URLEncoder.encode(left, "UTF-8")
+      + "&right=" + URLEncoder.encode(right, "UTF-8")
+      + "&leftColor=" + URLEncoder.encode(leftColor, "UTF-8")
+      + "&rightColor=" + URLEncoder.encode(rightColor, "UTF-8"));
     dp.forward(req, resp);
   }
 
