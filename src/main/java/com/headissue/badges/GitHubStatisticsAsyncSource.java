@@ -1,9 +1,9 @@
 package com.headissue.badges;
 
 import org.apache.commons.io.IOUtils;
+import org.cache2k.integration.AsyncCacheLoader;
 import org.cache2k.integration.CacheLoader;
 import org.json.JSONObject;
-
 
 import java.io.InputStream;
 import java.net.URL;
@@ -13,15 +13,22 @@ import java.net.URL;
  *
  * @author Jens Wilke
  */
-public class GitHubStatisticsSource extends CacheLoader<String, GitHubCounters> {
+public class GitHubStatisticsAsyncSource implements AsyncCacheLoader<String, GitHubCounters> {
+
+  public void load(final String key, final Context<String, GitHubCounters> context, final Callback<GitHubCounters> callback) {
+    context.getExecutor().execute(new Runnable() {
+      public void run() {
+        try {
+          callback.onLoadSuccess(load(key));
+        } catch (Throwable t) {
+          callback.onLoadFailure(t);
+        }
+      }
+    });
+  }
 
   public GitHubCounters load(final String key) throws Exception {
     InputStream in = new URL("https://api.github.com/repos/" + key).openConnection().getInputStream();
-    return parse(in);
-  }
-
-
-  public static GitHubCounters parse(InputStream in) throws Exception {
     String theString = IOUtils.toString(in, "UTF-8");
     in.close();
     JSONObject obj = new JSONObject(theString);

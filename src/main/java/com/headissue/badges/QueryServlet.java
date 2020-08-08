@@ -2,6 +2,7 @@ package com.headissue.badges;
 
 import org.cache2k.Cache2kBuilder;
 import org.cache2k.KeyValueSource;
+import org.cache2k.integration.AsyncCacheLoader;
 import org.cache2k.integration.CacheLoader;
 
 import javax.servlet.RequestDispatcher;
@@ -31,16 +32,26 @@ public class QueryServlet extends HttpServlet {
   Map<String, KeyValueSource<String, ?>> counterSources = new HashMap<String, KeyValueSource<String, ?>>();
 
   {
-    addSrouce("github", new GitHubStatisticsSource());
-    addSrouce("maven", new MavenCentralSource());
+    this.addSource("github", new GitHubStatisticsAsyncSource());
+    addSource("maven", new MavenCentralSource());
   }
 
   @SuppressWarnings("unchecked")
-  void addSrouce(String name, CacheLoader<String, ?> l) {
+  void addSource(String name, CacheLoader<String, ?> l) {
     counterSources.put(name,
       Cache2kBuilder.of(String.class, Object.class)
         .name(name)
         .loader((CacheLoader<String, Object>) l)
+        .refreshAhead(true)
+        .expireAfterWrite(REFRESH_MINUTES, TimeUnit.MINUTES)
+        .build());
+  }
+
+  void addSource(String name, AsyncCacheLoader<String, ?> l) {
+    counterSources.put(name,
+      Cache2kBuilder.of(String.class, Object.class)
+        .name(name)
+        .loader((AsyncCacheLoader<String, Object>) l)
         .refreshAhead(true)
         .expireAfterWrite(REFRESH_MINUTES, TimeUnit.MINUTES)
         .build());
