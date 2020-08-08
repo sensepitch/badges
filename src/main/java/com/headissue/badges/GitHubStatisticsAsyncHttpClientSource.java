@@ -9,7 +9,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.cache2k.integration.AsyncCacheLoader;
 
 /**
- * Request counters from GitHub.
+ * Request counters from GitHub. Async version which uses Apache http client.
  *
  * @author Jens Wilke
  */
