@@ -6,7 +6,8 @@
 
   <servlet>
     <servlet-name>counterServlet</servlet-name>
-    <servlet-class>com.headissue.badges.QueryServlet</servlet-class>
+    <servlet-class>com.headissue.badges.AsyncQueryServlet</servlet-class>
+    <async-supported>true</async-supported>
   </servlet>
   <servlet-mapping>
     <servlet-name>counterServlet</servlet-name>

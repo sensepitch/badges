@@ -5,25 +5,35 @@ General badge layout is taken from shields.io.
 
 The application is deployed at: x.h7e.eu
 
-## GitHub Star Gazers
+## Running
+
+Requires at least Java 11.
+
+Application can be tested locally with: `mvn jetty:run`
+
+Render a badge locally e.g. by accessing: http://localhost:8080/q/github/starGazers/gh-stargazers/cache2k/cache2k
+
+## Badges
+
+### GitHub Star Gazers
 
 Example Url: `https://x.h7e.eu/badges/xz/q/github/starGazers/gh-stargazers/cache2k/cache2k`
 
 ![GitHub Stargazers](https://x.h7e.eu/badges/xz/q/github/starGazers/gh-stargazers/cache2k/cache2k)
 
-## Latest Version on Maven Central
+### Latest Version on Maven Central
 
 Example Url: `https://x.h7e.eu/badges/xz/q/maven/latestVersion/maven-central/org.cache2k/cache2k-api`
 
 ![Maven Central](https://x.h7e.eu/badges/xz/q/maven/latestVersion/maven-central/org.cache2k/cache2k-api)
 
-## Free form badge
+### Free form badge
 
 Example Url: `https://x.h7e.eu/badges/xz/txt/hello/world`
 
 ![Hello World!](https://x.h7e.eu/badges/xz/txt/hello/world)
 
-## Free form with different color
+### Free form with different color
 
 Example Url: `https://x.h7e.eu/badges/xz/txt/hello,127/world,a23`
 
