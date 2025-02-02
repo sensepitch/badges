@@ -4,15 +4,16 @@ package com.headissue.badges;
  * @author Jens Wilke
  */
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -137,14 +138,14 @@ public class CompressFilter extends HttpServlet {
 
   class ServletResponseGZIPOutputStream extends ServletOutputStream {
 
-    OutputStream output;
+    ServletOutputStream output;
     ByteArrayOutputStream rawData;
     ByteArrayOutputStream compressedData;
     GZIPOutputStream gzipStream;
     HttpServletResponse response;
     boolean doCompress;
 
-    public ServletResponseGZIPOutputStream(boolean _doCompress, HttpServletResponse res, OutputStream o) throws IOException {
+    public ServletResponseGZIPOutputStream(boolean _doCompress, HttpServletResponse res, ServletOutputStream o) throws IOException {
       output = o;
       response = res;
       compressedData = new ByteArrayOutputStream();
@@ -217,6 +218,11 @@ public class CompressFilter extends HttpServlet {
 
     public boolean isReady() {
       return true;
+    }
+
+    @Override
+    public void setWriteListener(WriteListener writeListener) {
+      output.setWriteListener(writeListener);
     }
 
   }
@@ -407,6 +413,11 @@ public class CompressFilter extends HttpServlet {
     @Override
     public void write(byte[] b, int off, int len) throws IOException {
       innerOut.write(b, off, len);
+    }
+
+    @Override
+    public void setWriteListener(WriteListener writeListener) {
+
     }
   }
 

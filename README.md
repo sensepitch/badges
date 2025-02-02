@@ -1,9 +1,12 @@
+
 # Social Code Badges with Java
 
 Java servlet web application to request data from GitHub and maven central and render SVG badges.
 General badge layout is taken from shields.io.
 
 The application is deployed at: x.h7e.eu
+
+TODO 20250202;jw compression support with /xz prefix is broken
 
 ## Running
 
